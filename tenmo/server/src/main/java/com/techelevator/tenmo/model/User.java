@@ -1,5 +1,7 @@
 package com.techelevator.tenmo.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -7,7 +9,14 @@ import java.util.Set;
 public class User {
 
    private int id;
+
+   @NotBlank(message="Username cannot be blank")
+   @Size(min=4, message = "Username must be at least 4 characters long")
+   @Size(max=20, message = "Username cannot be more than 20 characters long")
    private String username;
+
+   @NotBlank(message="Password cannot be blank")
+   @Size(min=4, message = "Password must be at least 4 characters")
    private String password;
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
