@@ -1,8 +1,8 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS tenmo_user, account;
+DROP TABLE IF EXISTS tenmo_user, account, transfer;
 
-DROP SEQUENCE IF EXISTS seq_user_id, seq_account_id;
+DROP SEQUENCE IF EXISTS seq_user_id, seq_account_id, seq_transfer_id;
 
 -- Sequence to start user_id values at 1001 instead of 1
 CREATE SEQUENCE seq_user_id
@@ -44,10 +44,10 @@ CREATE TABLE transfer (
 	receiver_id int NOT NULL,
 	amount decimal(13, 2) NOT NULL,
 	status varchar(15) NOT NULL,
+	date_time timestamp NOT NULL,
 	CONSTRAINT PK_transfer PRIMARY KEY (transfer_id),
 	CONSTRAINT FK_sender_account FOREIGN KEY (sender_id) REFERENCES account (account_id),
 	CONSTRAINT FK_receiver_account FOREIGN KEY (receiver_id) REFERENCES account (account_id)
-	
 );
 
 COMMIT;
