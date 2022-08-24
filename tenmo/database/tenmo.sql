@@ -32,6 +32,22 @@ CREATE TABLE account (
 	CONSTRAINT PK_account PRIMARY KEY (account_id),
 	CONSTRAINT FK_account_tenmo_user FOREIGN KEY (user_id) REFERENCES tenmo_user (user_id)
 );
+-- Sequence to start transfer_id values at 3001 instead of 1
+CREATE SEQUENCE seq_transfer_id
+  INCREMENT BY 1
+  START WITH 3001
+  NO MAXVALUE;
 
+CREATE TABLE transfer (
+	transfer_id int NOT NULL DEFAULT nextval('seq_transfer_id'),
+	sender_id int NOT NULL,
+	receiver_id int NOT NULL,
+	amount decimal(13, 2) NOT NULL,
+	status varchar(15) NOT NULL,
+	CONSTRAINT PK_transfer PRIMARY KEY (transfer_id),
+	CONSTRAINT FK_sender_account FOREIGN KEY (sender_id) REFERENCES account (account_id),
+	CONSTRAINT FK_receiver_account FOREIGN KEY (receiver_id) REFERENCES account (account_id)
+	
+);
 
 COMMIT;
