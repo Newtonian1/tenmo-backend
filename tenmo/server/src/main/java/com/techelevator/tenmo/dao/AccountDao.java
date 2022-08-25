@@ -15,4 +15,5 @@ public interface AccountDao {
     int createAccount(int userId);
 
     boolean updateAccount(Account account);
+
 }
