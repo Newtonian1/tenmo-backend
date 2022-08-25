@@ -66,7 +66,8 @@ public class JdbcTransferDao implements TransferDao {
         transfer.setId(rs.getInt("transfer_id"));
         transfer.setSenderId(rs.getInt("sender_id"));
         transfer.setReceiverId(rs.getInt("receiver_id"));
-        transfer.setAmount(new BigDecimal(rs.getDouble("amount") + ""));
+        String bigDecimalInput = String.format("%.2f", rs.getDouble("amount"));
+        transfer.setAmount(new BigDecimal(bigDecimalInput));
         transfer.setStatus(rs.getString("status"));
         transfer.setDateTime(rs.getTimestamp("date_time").toLocalDateTime());
         return transfer;
