@@ -19,24 +19,24 @@ public class UserBusiness {
     }
 
     public User getUser(String username) {
-        return this.userDao.findByUsername(username);
+        return userDao.findByUsername(username);
     }
 
     public List<User> getAllUsers() {
-        return this.userDao.findAll();
+        return userDao.findAll();
     }
 
     public int findIdByUsername(String username) {
-        return this.userDao.findIdByUsername(username);
+        return userDao.findIdByUsername(username);
     }
 
     public boolean createUser(String username, String password) {
         if (findIdByUsername(username) != -1) {
             return false;
         }
-        this.userDao.create(username, password);
+        userDao.create(username, password);
         int userId = userDao.findIdByUsername(username);
-        this.accountDao.createAccount(userId);
+        accountDao.createAccount(userId);
         return true;
     }
 }
