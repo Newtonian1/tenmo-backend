@@ -42,17 +42,17 @@ public class TransferBusiness {
         //Log transfer into data table
         transferDao.createTransfer(transfer);
 
-        //Update balance of sender account
+        //Update balance of sender account (only locally within this method)
         BigDecimal newSenderBalance = senderBalance.subtract(amount);
         senderAccount.setBalance(newSenderBalance);
-        boolean wasSenderAccountUpdated = accountDao.updateAccount(senderAccount);
 
-        //Update balance of receiver account
+        //Update balance of receiver account (only locally within this method)
         Account receiverAccount = accountDao.getAccountById(receiverAccountId);
         BigDecimal receiverBalance = receiverAccount.getBalance();
         BigDecimal newReceiverBalance = receiverBalance.subtract(amount);
         receiverAccount.setBalance(newReceiverBalance);
-        boolean wasReceiverAccountUpdated = accountDao.updateAccount(receiverAccount);
-        return wasSenderAccountUpdated && wasReceiverAccountUpdated;
+
+        //Perform transaction
+        return accountDao.updateAccounts(senderAccount, receiverAccount);
     }
 }

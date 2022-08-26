@@ -66,12 +66,16 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     @Override
-    public boolean updateAccount(Account account) {
-        String sql = "UPDATE account SET user_id = ?, balance = ? WHERE account_id = ?;";
+    public boolean updateAccounts(Account senderAccount, Account receiverAccount) {
+        String sql = "BEGIN TRANSACTION; " +
+                "UPDATE account SET user_id = ?, balance = ? WHERE account_id = ?; " +
+                "UPDATE account SET user_id = ?, balance = ? WHERE account_id = ?; " +
+                "COMMIT;";
         int numberOfRows =
-                jdbcTemplate.update(sql, account.getUserId(), account.getBalance(),
-                        account.getId());
-        return numberOfRows == 1;
+                jdbcTemplate.update(sql, senderAccount.getUserId(), senderAccount.getBalance(),
+                        senderAccount.getId(), receiverAccount.getUserId(), receiverAccount.getBalance(),
+                        receiverAccount.getId());
+        return numberOfRows == 0;
     }
 
     private Account mapRowToAccount(SqlRowSet rs) {
