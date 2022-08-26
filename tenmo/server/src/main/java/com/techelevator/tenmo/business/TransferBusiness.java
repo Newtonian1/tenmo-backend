@@ -49,7 +49,7 @@ public class TransferBusiness {
         //Update balance of receiver account (only locally within this method)
         Account receiverAccount = accountDao.getAccountById(receiverAccountId);
         BigDecimal receiverBalance = receiverAccount.getBalance();
-        BigDecimal newReceiverBalance = receiverBalance.subtract(amount);
+        BigDecimal newReceiverBalance = receiverBalance.add(amount);
         receiverAccount.setBalance(newReceiverBalance);
 
         //Perform transaction
