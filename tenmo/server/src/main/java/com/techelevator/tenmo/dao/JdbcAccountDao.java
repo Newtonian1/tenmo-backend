@@ -2,6 +2,7 @@ package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.User;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -71,11 +72,15 @@ public class JdbcAccountDao implements AccountDao {
                 "UPDATE account SET user_id = ?, balance = ? WHERE account_id = ?; " +
                 "UPDATE account SET user_id = ?, balance = ? WHERE account_id = ?; " +
                 "COMMIT;";
-        int numberOfRows =
-                jdbcTemplate.update(sql, senderAccount.getUserId(), senderAccount.getBalance(),
-                        senderAccount.getId(), receiverAccount.getUserId(), receiverAccount.getBalance(),
-                        receiverAccount.getId());
-        return numberOfRows == 0;
+        try {
+            int numberOfRows =
+                    jdbcTemplate.update(sql, senderAccount.getUserId(), senderAccount.getBalance(),
+                            senderAccount.getId(), receiverAccount.getUserId(), receiverAccount.getBalance(),
+                            receiverAccount.getId());
+            return numberOfRows == 0;
+        } catch (DataAccessException e) {
+            return false;
+        }
     }
 
     private Account mapRowToAccount(SqlRowSet rs) {

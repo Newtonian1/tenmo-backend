@@ -57,7 +57,7 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
     }
 
     @Test
-    public void updateAccount2001BalanceTo50() {
+    public void updateAccountsChangesBalances() {
         Account accountBob = sut.getUserAccount("bob");
         BigDecimal newBobBalance = new BigDecimal("50.00");
         accountBob.setBalance(newBobBalance);
