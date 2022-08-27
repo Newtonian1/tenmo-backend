@@ -8,6 +8,8 @@ public interface AccountDao {
 
     Account getAccountById(int id);
 
+    Account getAccountByUserId(int userId);
+
     Account getUserAccount(String username);
 
     List<Account> getNonUserAccounts(String username);

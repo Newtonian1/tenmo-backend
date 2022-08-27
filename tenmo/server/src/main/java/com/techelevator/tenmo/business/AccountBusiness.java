@@ -16,6 +16,10 @@ public class AccountBusiness {
         this.dao = dao;
     }
 
+    public Account getAccountByUserId(int userId) {
+        return dao.getAccountByUserId(userId);
+    }
+
     public Account getUserAccount(String username) throws UsernameNotFoundException {
         return dao.getUserAccount(username);
     }

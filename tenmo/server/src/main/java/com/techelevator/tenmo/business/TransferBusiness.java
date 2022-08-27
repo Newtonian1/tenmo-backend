@@ -39,6 +39,17 @@ public class TransferBusiness {
             return false;
         }
 
+        //Ensure user doesn't send money to themselves
+        if (senderAccountId == receiverAccountId) {
+            return false;
+        }
+
+        //Ensure transfer amount is over 0
+        BigDecimal zero = new BigDecimal("0");
+        if(amount.compareTo(zero) <= 0) {
+            return false;
+        }
+
         //Log transfer into data table
         transferDao.createTransfer(transfer);
 

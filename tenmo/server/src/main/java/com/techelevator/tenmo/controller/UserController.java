@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@PreAuthorize("isAuthenticated()")
 public class UserController {
 
     private UserBusiness userBusiness;
@@ -20,14 +22,13 @@ public class UserController {
         this.userBusiness = userBusiness;
     }
 
-    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/users", method = RequestMethod.GET)
-    public Map<Integer, String> getAllUsers() {
+    public List<String> getAllUsers() {
         List<User> userList = userBusiness.getAllUsers();
-        Map<Integer, String> userIdName = new HashMap<>();
+        List<String> userNames = new ArrayList<>();
         for (User user : userList) {
-            userIdName.put(user.getId(), user.getUsername());
+            userNames.add(user.getUsername());
         }
-        return userIdName;
+        return userNames;
     }
 }
