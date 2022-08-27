@@ -2,6 +2,7 @@ package com.techelevator.tenmo.business;
 
 import com.techelevator.tenmo.dao.AccountDao;
 import com.techelevator.tenmo.model.Account;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,11 +16,11 @@ public class AccountBusiness {
         this.dao = dao;
     }
 
-    public Account getUserAccount(String username) {
+    public Account getUserAccount(String username) throws UsernameNotFoundException {
         return dao.getUserAccount(username);
     }
 
-    public List<Account> getNonUserAccounts(String username) {
-        return dao.getNonUserAccounts(username);
-    }
+//    public List<Account> getNonUserAccounts(String username) {
+//        return dao.getNonUserAccounts(username);
+//    }
 }
