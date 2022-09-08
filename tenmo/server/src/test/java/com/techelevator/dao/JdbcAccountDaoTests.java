@@ -68,6 +68,13 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
         Assert.assertTrue(updated);
         Assert.assertEquals(newBobBalance, sut.getUserAccount("bob").getBalance());
         Assert.assertEquals(newUserBalance, sut.getUserAccount("user").getBalance());
+
+        //Rollback (because balances are updated in a SQL transaction that is committed, they cannot be auto rolled back)
+        newBobBalance = new BigDecimal("950.00");
+        accountBob.setBalance(newBobBalance);
+        newUserBalance = new BigDecimal("1050.00");
+        accountUser.setBalance(newUserBalance);
+        sut.updateAccounts(accountBob,accountUser);
     }
 
 }
